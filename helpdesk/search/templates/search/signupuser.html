@@ -1,0 +1,17 @@
+{% extends 'search/base.html' %}
+
+{% block content %}
+<h1>Sign Up Here!</h1>
+
+<p>
+<h2>{{ error }}</h2>
+</p>
+<form method="POST">
+
+    {{ form.as_p }}
+    {% csrf_token %}
+    <button type="submit">Sign Up!</button>
+
+</form>
+
+{% endblock %}

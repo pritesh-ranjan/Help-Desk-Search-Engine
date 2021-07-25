@@ -1,0 +1,12 @@
+{% extends 'search/base.html' %}
+
+{% block content %}
+Search here!
+
+<form action="{% url 'searchresults' %}">
+    <label for="query">Query:</label>
+    <input id="query" name="query" type="text"><br><br>
+    <input type="submit" value="Submit">
+</form>
+
+{% endblock %}
