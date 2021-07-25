@@ -29,5 +29,4 @@ urlpatterns = [
     # Search
     path('search/', views.search, name='search'),
     path('searchresults/', views.searchresults, name='searchresults'),
-
 ]
