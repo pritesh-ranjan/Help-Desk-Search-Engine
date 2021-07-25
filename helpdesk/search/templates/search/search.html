@@ -1,12 +1,31 @@
 {% extends 'search/base.html' %}
 
 {% block content %}
-Search here!
+{% if user.is_authenticated %}
 
-<form action="{% url 'searchresults' %}">
-    <label for="query">Query:</label>
-    <input id="query" name="query" type="text"><br><br>
-    <input type="submit" value="Submit">
-</form>
 
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        <h2>Search here!</h2>
+    </div>
+</div>
+<div class="row justify-content-center mt-5">
+    <div class="col-md-5">
+        {% if error %}
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+        {% endif %}
+        <form action="{% url 'searchresults' %}">
+            <div class="form-group">
+                <label for="query">Query</label>
+                <input class="form-control" id="query" name="query" type="text">
+            </div>
+
+            <button class="btn btn-primary" type="submit">Search</button>
+        </form>
+        <hr>
+    </div>
+</div>
+{% endif %}
 {% endblock %}

@@ -29,4 +29,6 @@ urlpatterns = [
     # Search
     path('search/', views.search, name='search'),
     path('searchresults/', views.searchresults, name='searchresults'),
+    # API
+    # path('api/', include('api.urls')),
 ]

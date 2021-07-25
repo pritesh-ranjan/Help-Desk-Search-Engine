@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
@@ -14,7 +15,8 @@ def signupuser(request):
         # Create a new user if it is a POST request
         if request.POST['password1'] == request.POST['password2']:
             try:
-                user = User.objects.create_user(request.POST['username'], request.POST['password1'])
+                print(request.POST['username'], request.POST['password1'])
+                user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)  # finally login
                 return redirect('search')
@@ -52,10 +54,12 @@ def logoutuser(request):
         return redirect('home')
 
 
+@login_required
 def search(request):
     return render(request, 'search/search.html')
 
 
+@login_required
 def searchresults(request):
     query = request.GET.get('query')
     if query:
