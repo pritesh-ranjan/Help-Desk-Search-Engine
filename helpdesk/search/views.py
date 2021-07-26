@@ -4,9 +4,13 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
+from faker import Faker
 
 
 # Create your views here.
+from search.models import HelpdeskModel
+
+
 def signupuser(request):
     if request.method == 'GET':
         # Load the signup page if it is a GET request
@@ -68,5 +72,18 @@ def searchresults(request):
     return render(request, 'search/searchresults.html', {'query': query})
 
 
+def generate_fake_data():
+    fake = Faker()
+    keywords = ['help', 'ticket', 'support', 'data', 'tech', 'computer', 'hardware', 'software', 'dashboard', 'rating',
+                'install', 'working', 'admin', 'IT', 'supervisor', 'manager', 'error', 'missing', 'not installed',
+                'not starting', 'failure', 'boot']
+    for _ in range(100):
+        title = fake.sentence(ext_word_list=keywords)
+        details = fake.sentence(ext_word_list=keywords)
+        owner = fake.name()
+        HelpdeskModel.objects.create(title=title.rstrip('.'), details=details, owner=owner)
+
+
 def home(request):
+    generate_fake_data()
     return render(request, 'search/home.html')
