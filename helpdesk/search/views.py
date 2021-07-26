@@ -5,10 +5,13 @@ from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from faker import Faker
+import logging, traceback
 
 
 # Create your views here.
 from search.models import HelpdeskModel
+
+from search.documents import HelpdeskDocument
 
 
 def signupuser(request):
@@ -23,9 +26,11 @@ def signupuser(request):
                 user = User.objects.create_user(request.POST['username'], password=request.POST['password1'])
                 user.save()
                 login(request, user)  # finally login
+                logging.warning(f" logging in {request.POST['username']}")
                 return redirect('search')
             except IntegrityError:
                 # If username already exists show error
+                logging.warning(f"{request.POST['username']} is taken. Please try again")
                 return render(request, 'search/signupuser.html',
                               {'form': UserCreationForm(),
                                'error': f"{request.POST['username']} is taken. Please try again"})
@@ -47,6 +52,7 @@ def loginuser(request):
             login(request, user)  # finally login
             return redirect('search')
         else:
+            logging.warning("Username or password didn't match")
             return render(request, 'search/loginuser.html',
                           {'form': AuthenticationForm(),
                            'error': "Username or password didn't match"})
@@ -55,7 +61,7 @@ def loginuser(request):
 def logoutuser(request):
     if request.method == 'POST':
         logout(request)
-        return redirect('home')
+        return redirect('loginuser')
 
 
 @login_required
@@ -68,11 +74,19 @@ def searchresults(request):
     query = request.GET.get('query')
     if query:
         query = str(query).strip()
+    logging.info(query)
+    s = HelpdeskDocument.search().query("match", title=query).query("match", details=query)
+    qs = s.to_queryset()
+
+    for cat in qs:
+        print(cat.title)
+        print(cat.details)
 
     return render(request, 'search/searchresults.html', {'query': query})
 
 
 def generate_fake_data():
+    logging.info("generating fake data!")
     fake = Faker()
     keywords = ['help', 'ticket', 'support', 'data', 'tech', 'computer', 'hardware', 'software', 'dashboard', 'rating',
                 'install', 'working', 'admin', 'IT', 'supervisor', 'manager', 'error', 'missing', 'not installed',
@@ -81,7 +95,8 @@ def generate_fake_data():
         title = fake.sentence(ext_word_list=keywords)
         details = fake.sentence(ext_word_list=keywords)
         owner = fake.name()
-        HelpdeskModel.objects.create(title=title.rstrip('.'), details=details, owner=owner)
+        hd = HelpdeskModel(title=title.rstrip('.'), details=details, owner=owner)
+        hd.save()
 
 
 def home(request):
