@@ -159,6 +159,7 @@ logging.config.dictConfig({
             'filename': 'debug.log'
         }
     },
+
     'loggers': {
         '': {
             'level': 'DEBUG',
