@@ -156,7 +156,7 @@ logging.config.dictConfig({
             'level': 'DEBUG',
             'class': 'logging.FileHandler',
             'formatter': 'file',
-            'filename': '/tmp/debug.log'
+            'filename': 'debug.log'
         }
     },
     'loggers': {

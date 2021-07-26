@@ -78,11 +78,7 @@ def searchresults(request):
     s = HelpdeskDocument.search().query("match", title=query).query("match", details=query)
     qs = s.to_queryset()
 
-    for cat in qs:
-        print(cat.title)
-        print(cat.details)
-
-    return render(request, 'search/searchresults.html', {'query': query})
+    return render(request, 'search/searchresults.html', {'query': query, 'results': qs})
 
 
 def generate_fake_data():
