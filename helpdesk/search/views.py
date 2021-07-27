@@ -6,6 +6,7 @@ from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from faker import Faker
 import logging, traceback
+from django.core.management import call_command
 
 
 # Create your views here.
@@ -87,14 +88,19 @@ def generate_fake_data():
     keywords = ['help', 'ticket', 'support', 'data', 'tech', 'computer', 'hardware', 'software', 'dashboard', 'rating',
                 'install', 'working', 'admin', 'IT', 'supervisor', 'manager', 'error', 'missing', 'not installed',
                 'not starting', 'failure', 'boot']
-    for _ in range(100):
+    for _ in range(10):
         title = fake.sentence(ext_word_list=keywords)
-        details = fake.sentence(ext_word_list=keywords)
+        details = fake.sentence(ext_word_list=keywords) + fake.sentence()
         owner = fake.name()
         hd = HelpdeskModel(title=title.rstrip('.'), details=details, owner=owner)
         hd.save()
+    logging.info('rebuilding elasticsearch index after data creation')
+    call_command('search_index', '--rebuild', '-f')
 
 
 def home(request):
-    generate_fake_data()
-    return render(request, 'search/home.html')
+    if request.user.is_authenticated:
+        return redirect('search')
+    else:
+        generate_fake_data()
+        return render(request, 'search/home.html')
