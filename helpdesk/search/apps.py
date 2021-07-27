@@ -1,9 +1,4 @@
-import logging
-
 from django.apps import AppConfig
-from faker import Faker
-import logging
-
 
 
 class SearchConfig(AppConfig):
