@@ -34,7 +34,7 @@ for the first time.
    
 3. User can search the Elastisearch by providing the appropriate query in the searchbar
 
-4. To use the api, user needs to add api after the bse url
+4. To use the API, user needs to add api after the bse url
 So to login we need to do POST request to 
    http://127.0.0.1:8000/api/login
    
