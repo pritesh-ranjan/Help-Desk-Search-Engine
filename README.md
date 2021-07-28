@@ -46,6 +46,7 @@ We can do a get request. For example:
    http://127.0.0.1:8000/api/search/?query=computer
    
 7. We can run tests from the following command
+
 `
 python manage.py test search   
 `
