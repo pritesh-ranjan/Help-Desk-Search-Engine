@@ -10,6 +10,8 @@ from rest_framework.parsers import JSONParser
 
 from search.documents import HelpdeskDocument
 
+from search.models import HelpdeskModel
+
 
 @csrf_exempt
 def signup(request):
@@ -23,6 +25,7 @@ def signup(request):
         except IntegrityError:
             return JsonResponse({'error': 'That username has already been taken. Please choose a new username'},
                                 status=400)
+    return JsonResponse({'Message': 'Please use post request'}, status='400')
 
 
 @csrf_exempt
@@ -38,15 +41,18 @@ def login(request):
             except:
                 token = Token.objects.create(user=user)
             return JsonResponse({'token': str(token)}, status=200)
+    return JsonResponse({'Message': 'Please use post request'}, status='400')
 
 
-class SeearchList(generics.ListAPIView):
+class SearchList(generics.ListAPIView):
     serializer_class = HelpdeskSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
+        qs = HelpdeskModel.objects.all()
         user = self.request.user
-        query = self.request.query_params.get('query')
-        s = HelpdeskDocument.search().query("match", title=query).query("match", details=query)
-        qs = s.to_queryset()
+        query = self.request.query_params.get('query', None)
+        if query:
+            s = HelpdeskDocument.search().query("match", title=query).query("match", details=query)
+            qs = s.to_queryset()
         return qs
