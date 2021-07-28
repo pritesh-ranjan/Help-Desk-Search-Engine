@@ -35,6 +35,7 @@ path.data: /var/lib/elasticsearch
 # Path to log files:
 #
 path.logs: /var/log/elasticsearch
+
 #
 # ----------------------------------- Memory -----------------------------------
 #
