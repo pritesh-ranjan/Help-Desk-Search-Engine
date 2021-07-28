@@ -38,7 +38,10 @@ for the first time.
 So to login we need to do POST request to 
    http://127.0.0.1:8000/api/login
    
-5. TO search a specific query via the API:
+5. To signup, we need to do POST request to 
+   http://127.0.0.1:8000/api/signup
+   
+5. To search a specific query via the API:
 We can do a get request. For example:
    http://127.0.0.1:8000/api/search/?query=computer
    
