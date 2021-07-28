@@ -41,11 +41,11 @@ So to login we need to do POST request to
 5. To signup, we need to do POST request to 
    http://127.0.0.1:8000/api/signup
    
-5. To search a specific query via the API:
+6. To search a specific query via the API:
 We can do a get request. For example:
    http://127.0.0.1:8000/api/search/?query=computer
    
-6. We can run tests from the following command
+7. We can run tests from the following command
 `
 python manage.py test search   
 `
