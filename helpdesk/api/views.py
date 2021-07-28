@@ -50,7 +50,6 @@ class SearchList(generics.ListAPIView):
 
     def get_queryset(self):
         qs = HelpdeskModel.objects.all()
-        user = self.request.user
         query = self.request.query_params.get('query', None)
         if query:
             s = HelpdeskDocument.search().query("match", title=query).query("match", details=query)

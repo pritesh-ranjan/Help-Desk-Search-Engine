@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'api',
     'rest_framework',
     'django_elasticsearch_dsl',
-    'django_elasticsearch_dsl_drf',
 ]
 
 ELASTICSEARCH_DSL = {
