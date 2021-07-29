@@ -1,7 +1,7 @@
 ![github workflow](https://github.com/pritesh-ranjan/Help-Desk-Search-Engine/actions/workflows/python-app.yml/badge.svg)
 
 
-![Search] (./helpdesk/search/static/search/logo.png?raw=true )
+![Search] (/helpdesk/search/static/search/logo.png?raw=true )
 # Help-Desk-Search-Engine
 
 A web application based on Python-Django and Elasticsearch
