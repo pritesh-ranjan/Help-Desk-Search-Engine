@@ -2,7 +2,9 @@
 
 
 
-<img src="./helpdesk/search/static/search/logo.png">
+<img src="./helpdesk/search/static/search/logo.png" width="50">
+
+
 # Help-Desk-Search-Engine
 
 A web application based on Python-Django and Elasticsearch
